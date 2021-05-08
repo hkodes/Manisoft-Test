@@ -1,10 +1,15 @@
-# crap1
+# Flutter test for ManiSoft Solutions
 
 A new Flutter project.
 
 ## Getting Started
 
 This project is a starting point for a Flutter application.
+
+Here, you can generate a random number and compare it with the seconds of the clock time. 
+
+Developed by:
+Hishore
 
 A few resources to get you started if this is your first Flutter project:
 
