@@ -34,24 +34,16 @@ class _MyHomePageState extends State<MyHomePage> {
   Random random = new Random();
 
   void initState() {
-    _timeString =
-        "${DateTime.now().hour} : ${DateTime.now().minute} :${DateTime.now().second}";
+    _timeString = "${DateTime.now().second}";
     Timer.periodic(Duration(seconds: 1), (Timer t) => _getCurrentTime());
     super.initState();
   }
 
-  void _incrementCounter() {
+  // ignore: missing_return
+  int _incrementCounter() {
     setState(() {
       _counter = random.nextInt(60);
     });
-  }
-
-  _validate() {
-    if (_counter == "${DateTime.now().second}") {
-      return AlertDialog(title: Text("Success"));
-    } else {
-      return AlertDialog(title: Text("Try again"));
-    }
   }
 
   @override
@@ -85,8 +77,9 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          _incrementCounter();
-          _validate();
+          _incrementCounter() != _timeString
+              ? showAlertDialog(context)
+              : showConfirmDialog(context);
         },
         child: Icon(Icons.add),
       ),
@@ -99,4 +92,58 @@ class _MyHomePageState extends State<MyHomePage> {
           "${DateTime.now().hour} : ${DateTime.now().minute} :${DateTime.now().second}";
     });
   }
+}
+
+showAlertDialog(BuildContext context) {
+  // Create button
+  Widget okButton = FlatButton(
+    child: Text("OK"),
+    onPressed: () {
+      Navigator.of(context).pop();
+    },
+  );
+
+  // Create AlertDialog
+  AlertDialog alert = AlertDialog(
+    title: Text("Failed"),
+    content: Text("Please try again"),
+    actions: [
+      okButton,
+    ],
+  );
+
+  // show the dialog
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return alert;
+    },
+  );
+}
+
+showConfirmDialog(BuildContext context) {
+  // Create button
+  Widget okButton = FlatButton(
+    child: Text("OK"),
+    onPressed: () {
+      Navigator.of(context).pop();
+    },
+  );
+
+  // Create AlertDialog
+  AlertDialog alert = AlertDialog(
+    title: Text("Success"),
+    content: Text("Congrats !"),
+    actions: [
+      okButton,
+    ],
+  );
+
+  // show the dialog
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return alert;
+    },
+  );
 }
